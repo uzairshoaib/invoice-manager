@@ -1,0 +1,54 @@
+
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-users"></i> All Clients
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Company</th>
+          <th>Designation</th>
+          <th>Status</th>
+
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for client <- @client do %>
+        <tr>
+          <td><%= client.name %></td>
+          <td><%= client.email %></td>
+          <td><%= client.phone %></td>
+          <td><%= client.company %></td>
+          <td><%= client.designation %></td>
+          <td><%= client.status %></td>
+
+          <td class="text-right">
+            <span>
+              <%= link to: client_path(@conn, :show, client), class: "btn btn-outline-info btn-sm" do %>
+                <i class="fa fa-eye"></i>
+              <% end %>
+            </span>
+            <span>
+              <%= link to: client_path(@conn, :edit, client), class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fa fa-pencil-alt"></i>
+              <% end %>
+            </span>
+            <span>
+              <%= link to: client_path(@conn, :delete, client), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-outline-danger btn-sm" do %>
+              <i class="fa fa-trash"></i>
+              <% end %>
+            </span>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+</div>
+<span><%= link "New client", to: client_path(@conn, :new), class: "btn btn-sm btn-outline-success" %></span>

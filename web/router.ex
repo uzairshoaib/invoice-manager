@@ -18,6 +18,11 @@ defmodule InvoiceManager.Router do
 
     get "/", PageController, :index
   end
+  scope "/manage", InvoiceManager do
+    pipe_through :browser
+
+    resources "/clients", ClientController
+  end
 
   # Other scopes may use custom stacks.
   # scope "/api", InvoiceManager do

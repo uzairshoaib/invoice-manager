@@ -1,0 +1,38 @@
+<h2>Show client</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @client.name %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @client.email %>
+  </li>
+
+  <li>
+    <strong>Phone:</strong>
+    <%= @client.phone %>
+  </li>
+
+  <li>
+    <strong>Company:</strong>
+    <%= @client.company %>
+  </li>
+
+  <li>
+    <strong>Designation:</strong>
+    <%= @client.designation %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @client.status %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: client_path(@conn, :edit, @client) %></span>
+<span><%= link "Back", to: client_path(@conn, :index) %></span>
