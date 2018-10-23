@@ -1,0 +1,80 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+  
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="form-group">
+        <%= label f, :title, class: "control-label" %>
+        <%= text_input f, :title, class: "form-control" %>
+        <%= error_tag f, :title %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group">
+        <%= label f, :client_id, "Select Client", class: "control-label" %>
+        <%= select f, :client_id, @clients, class: "form-control", prompt: "Select Client" %>
+        <%= error_tag f, :client_id %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <%= label f, :type_id, "Select Invoice Type", class: "control-label" %>
+      <%= select f, :type_id, @types, class: "form-control", prompt: "Select Type" %>
+      <%= error_tag f, :type_id %>
+    </div>
+  </div>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Qty</th>
+        <th>Unit</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="invoice-items">
+      <%= inputs_for f, :items, fn f -> %>
+        <tr>
+            <td width="30%">
+              <%= textarea f, :description, class: "form-control" %>
+              <%= error_tag f, :description %>
+            </td>
+            <td width="10%">
+              <%= number_input f, :quantity, step: "any", class: "form-control input-quantity" %>
+              <%= error_tag f, :quantity %>
+            </td>
+            <td width="10%">
+              <%= select f, :unit_id, @units, class: "form-control" %>
+              <%= error_tag f, :unit_id %>
+            </td>
+            <td width="10%">
+              <%= number_input f, :price, step: "any", class: "form-control input-price" %>
+              <%= error_tag f, :price %>
+            </td>
+            <td width="15%">
+              <%= number_input f, :amount, step: "any", class: "form-control input-amount", readonly: true %>
+              <%= error_tag f, :amount %>
+            </td>
+            <td>
+              <a href="/test" class="remove-item text-danger">
+                <i class="fa fa-times"></i>
+              </a>
+            </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <a href="javascript:;" class="btn btn-sm btn-outline-success float-right add-item"><i class="fa fa-plus"></i></a>
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

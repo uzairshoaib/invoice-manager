@@ -117,6 +117,12 @@
             <span>Clients</span>
           <% end %>
         </li>
+        <li class="nav-item active">
+          <%= link to: invoice_path(@conn, :index), class: "nav-link" do %>
+            <i class="fas fa-fw fa-file-invoice-dollar"></i>
+            <span>Invoices</span>
+          <% end %>
+        </li>
       </ul>
 
       <div id="content-wrapper">
@@ -184,10 +190,71 @@
     <script src="<%= static_path(@conn, "/js/sb-admin.min.js") %>"></script>
 
     <!-- Demo scripts for this page-->
-    <script src="<%= static_path(@conn, "/js/demo/datatables-demo.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/demo/datatables-demo.js") %>"></script>    
     <%# Script for app %>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-  </body>
 
+    <%# theme js %>
+    <script>
+      (() => {
+        // add item listener
+        document.querySelector('.add-item').addEventListener('click', () => {
+          const itemsContainer = document.getElementById('invoice-items'),
+                itemTemplate = document.createElement('tr'),
+                itemsLength = document.querySelectorAll('#invoice-items tr').length,
+                itemIndex = ((itemsLength + 1) - 1)
+
+          itemTemplate.innerHTML = `
+            <td width="30%">
+              <textarea class="form-control" id="invoice_items_${itemIndex}_description" name="invoice[items][${itemIndex}][description]"></textarea>              
+            </td>
+            <td width="10%">
+              <input class="form-control input-quantity" id="invoice_items_${itemIndex}_quantity" name="invoice[items][${itemIndex}][quantity]" step="any" type="number">              
+            </td>
+            <td width="10%">
+              <select class="form-control" id="invoice_items_${itemIndex}_unit_id" name="invoice[items][${itemIndex}][unit_id]"><option value="1">KG</option></select>              
+            </td>
+            <td width="10%">
+              <input class="form-control input-price" id="invoice_items_${itemIndex}_price" name="invoice[items][${itemIndex}][price]" step="any" type="number">              
+            </td>
+            <td width="15%">
+              <input class="form-control input-amount" id="invoice_items_${itemIndex}_amount" name="invoice[items][${itemIndex}][amount]" step="any" type="number" readonly="true">              
+            </td>
+            <td>
+              <a href="javascript:;" class="remove-item text-danger"><i class="fa fa-times"></i></a>
+            </td>`
+            itemsContainer.appendChild(itemTemplate)
+            addPriceAndQuantityListeners()
+        })
+        // calculate amount events
+        function addPriceAndQuantityListeners() {
+          $('.input-quantity').each((i, el) => {
+            $(el).on('keyup', function() {
+              var qty = $(this).val(),
+                  price = $(this).closest('tr').find('.input-price').val(),
+                  amount = $(this).closest('tr').find('.input-amount')
+              amount.val(qty * price)          
+            })
+          })
+          $('.input-price').each((i, el) => {
+            $(el).on('keyup', function() {
+              var price = $(this).val(),
+                  qty = $(this).closest('tr').find('.input-quantity').val(),
+                  amount = $(this).closest('tr').find('.input-amount')
+              amount.val(qty * price)          
+            })
+          })
+        }
+        // remove item listener
+        document.querySelectorAll('.remove-item').forEach((el, i) => {
+          el.addEventListener('click', (e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            el.closest('tr').remove()
+          })
+        })
+      })()
+    </script>
+  </body>
 </html>
 

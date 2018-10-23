@@ -1,0 +1,9 @@
+<h2>New invoice</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: invoice_path(@conn, :create),
+                        types: @types,
+                        clients: @clients,
+                        units: @units %>
+
+<span><%= link "Back", to: invoice_path(@conn, :index) %></span>

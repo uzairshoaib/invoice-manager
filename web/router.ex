@@ -22,6 +22,7 @@ defmodule InvoiceManager.Router do
     pipe_through :browser
 
     resources "/clients", ClientController
+    resources "/invoices", InvoiceController
   end
 
   # Other scopes may use custom stacks.

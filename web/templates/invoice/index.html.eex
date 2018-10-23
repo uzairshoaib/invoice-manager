@@ -1,0 +1,41 @@
+<h2>Listing invoices</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Type</th>
+      <th>Client</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for invoice <- @invoices do %>
+    <tr>
+      <td><%= invoice.title %></td>
+      <td><%= invoice.type.title %></td>
+      <td><%= invoice.client.name %></td>
+
+      <td class="text-right">
+        <span>
+              <%= link to: invoice_path(@conn, :show, invoice), class: "btn btn-outline-info btn-sm" do %>
+                <i class="fa fa-eye"></i>
+              <% end %>
+            </span>
+            <span>
+              <%= link to: invoice_path(@conn, :edit, invoice), class: "btn btn-outline-primary btn-sm" do %>
+                <i class="fa fa-pencil-alt"></i>
+              <% end %>
+            </span>
+            <span>
+              <%= link to: invoice_path(@conn, :delete, invoice), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-outline-danger btn-sm" do %>
+              <i class="fa fa-trash"></i>
+              <% end %>
+            </span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New invoice", to: invoice_path(@conn, :new) %></span>

@@ -1,0 +1,57 @@
+<h2>Show invoice</h2>
+
+<table class="table table-bordered m-0">
+  <tbody>
+    <tr>
+      <td width="50%">
+        <strong>Party Details:</strong><br>
+        <span><%= @invoice.client.name %></span>
+      </td>
+      <td width="50%">
+        Invoice No.: <%= @invoice.type.title %> Bill<%= @invoice.id %> <br>
+        Date: <%= Timex.format!(@invoice.inserted_at, "{0h12}:{m} {AM} {D} {Mfull} {YYYY}") %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <%= @invoice.title %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>S.N</th>
+      <th>Description of Goods</th>
+      <th>Date</th>
+      <th>Qty</th>
+      <th>Unit</th>
+      <th>Price</th>
+      <th>Amount (Rs.)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for item <- @invoice.items do %>
+    <tr>
+      <td><%= item.id %></td>
+      <td><%= item.description %></td>
+      <td><%= Timex.format!(item.inserted_at, "{0h24}:{m}, {D} {Mfull} {YYYY}") %></td>
+      <td><%= item.quantity %></td>
+      <td><%= item.unit_id %></td>
+      <td><%= item.price %></td>
+      <td><%= item.amount %></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td colspan="6" class="text-right">
+        <strong>Total:</strong>
+      </td>
+      <td>
+        <%= @invoice_amount %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<span><%= link "Edit", to: invoice_path(@conn, :edit, @invoice) %></span>
+<span><%= link "Back", to: invoice_path(@conn, :index) %></span>
