@@ -48,7 +48,6 @@
         <strong>Total:</strong>
       </td>
       <td>
-        <%= @invoice_amount %>
       </td>
     </tr>
   </tbody>
