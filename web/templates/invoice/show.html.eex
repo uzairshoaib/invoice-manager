@@ -38,7 +38,7 @@
       <td><%= item.description %></td>
       <td><%= Timex.format!(item.inserted_at, "{0h24}:{m}, {D} {Mfull} {YYYY}") %></td>
       <td><%= item.quantity %></td>
-      <td><%= item.unit_id %></td>
+      <td><%= item.unit.title %></td>
       <td><%= item.price %></td>
       <td><%= item.amount %></td>
     </tr>
@@ -48,6 +48,8 @@
         <strong>Total:</strong>
       </td>
       <td>
+        <%= Enum.map(@invoice.items, fn i -> Decimal.to_float i.amount end)
+            |> Enum.sum %>
       </td>
     </tr>
   </tbody>

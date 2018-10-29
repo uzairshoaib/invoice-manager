@@ -33,7 +33,6 @@
     <thead>
       <tr>
         <th>Description</th>
-        <th>Date</th>
         <th>Qty</th>
         <th>Unit</th>
         <th>Price</th>
