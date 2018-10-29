@@ -60,7 +60,7 @@ defmodule InvoiceManager.InvoiceController do
 
   def show(conn, %{"id" => id}) do
     invoice = Repo.get!(Invoice, id)
-              |> Repo.preload([:items, :client, :type])
+              |> Repo.preload([items: [:unit], client: [], type: []])
     render(conn, "show.html", invoice: invoice)
   end
 
