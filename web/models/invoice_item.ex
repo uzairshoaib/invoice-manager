@@ -7,8 +7,8 @@ defmodule InvoiceManager.InvoiceItem do
     field :quantity, :decimal
     field :price, :decimal
     field :amount, :decimal
-    belongs_to :unit, InvoiceManager.Unit, foreign_key: :unit_id
-    belongs_to :invoice, Invoice.Unit, foreign_key: :invoice_id
+    belongs_to :unit, InvoiceManager.InvoiceItemUnit, foreign_key: :unit_id
+    belongs_to :invoice, InvoiceManager.Invoice, foreign_key: :invoice_id
 
     timestamps()
   end
