@@ -59,6 +59,7 @@ defmodule InvoiceManager.Web do
   def router do
     quote do
       use Phoenix.Router
+      import InvoiceManager.Auth, only: [authenticate_user: 2] # new import
     end
   end
 
