@@ -17,6 +17,7 @@ defmodule InvoiceManager.Invoice do
     struct
     |> cast(params, [:title, :client_id, :type_id])
     |> validate_required([:title, :client_id, :type_id])
+    |> foreign_key_constraint(:client_id)
     |> cast_assoc(:items)
   end
 end

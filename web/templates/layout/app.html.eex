@@ -123,12 +123,22 @@
             <span>Invoices</span>
           <% end %>
         </li>
+        <li class="nav-item active">
+          <%= link to: ledger_path(@conn, :index), class: "nav-link" do %>
+            <i class="fab fa-accusoft"></i>
+            <span>Ledgers</span>
+          <% end %>
+        </li>
+        <li class="nav-item active">
+          <%= link to: payment_path(@conn, :index), class: "nav-link" do %>
+            <i class="fas fa-money-bill-alt"></i> Payments
+          <% end %>
+        </li>
       </ul>
 
       <div id="content-wrapper">
         <div class="container-fluid">
-          <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-          <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+          <%= render "error.html", conn: @conn %>
           <main role="main">
             <%= render @view_module, @view_template, assigns %>
           </main>
@@ -178,7 +188,7 @@
     <!-- Bootstrap core JavaScript-->
     <script src="<%= static_path(@conn, "/vendor/jquery/jquery.min.js") %>"></script>
     <script src="<%= static_path(@conn, "/vendor/bootstrap/js/bootstrap.bundle.min.js") %>"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="<%= static_path(@conn, "/vendor/jquery-easing/jquery.easing.min.js") %>"></script>
 
@@ -193,12 +203,14 @@
     <script src="<%= static_path(@conn, "/js/demo/datatables-demo.js") %>"></script>    
     <%# Script for app %>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <%# Script for theme %>
+    <script src="<%= static_path(@conn, "/js/theme.js") %>"></script>
 
     <%# theme js %>
     <script>
-      (() => {
+      (function() {
         // add item listener
-        document.querySelector('.add-item').addEventListener('click', () => {
+        $('.add-item').on('click', () => {
           const itemsContainer = document.getElementById('invoice-items'),
                 itemTemplate = document.createElement('tr'),
                 itemsLength = document.querySelectorAll('#invoice-items tr').length,
@@ -227,13 +239,15 @@
             addPriceAndQuantityListeners()
         })
         // calculate amount events
+        addPriceAndQuantityListeners()
         function addPriceAndQuantityListeners() {
           $('.input-quantity').each((i, el) => {
             $(el).on('keyup', function() {
               var qty = $(this).val(),
                   price = $(this).closest('tr').find('.input-price').val(),
                   amount = $(this).closest('tr').find('.input-amount')
-              amount.val(qty * price)          
+              totalAmount = Math.floor((qty * price) * 100) / 100
+              amount.val(totalAmount.toFixed(2))          
             })
           })
           $('.input-price').each((i, el) => {

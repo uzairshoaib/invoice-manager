@@ -16,7 +16,7 @@ alias InvoiceManager.Repo
 alias InvoiceManager.User
 
 
-Repo.insert %User{username: "admin", password_hash: Comeonin.Bcrypt.hashpwsalt("admin"), name: "Admin", email: "admin@invoicemanager.com"}
+# Repo.insert %User{username: "admin", password_hash: Comeonin.Bcrypt.hashpwsalt("admin"), name: "Admin", email: "admin@invoicemanager.com"}
 
 # invoice_types = ["Sale", "Purchase"]
 # for invoice_type <- invoice_types do

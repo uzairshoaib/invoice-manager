@@ -38,6 +38,9 @@ defmodule InvoiceManager.Router do
 
     resources "/clients", ClientController
     resources "/invoices", InvoiceController
+    resources "/payments", PaymentController
+    get "/ledgers", LedgerController, :index
+    get "/ledgers/:id", LedgerController, :show
   end
 
   # Other scopes may use custom stacks.

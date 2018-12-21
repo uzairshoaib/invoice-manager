@@ -2,7 +2,7 @@ defmodule InvoiceManager.Repo.Migrations.CreateClient do
   use Ecto.Migration
 
   def change do
-    create table(:client) do
+    create table(:clients) do
       add :name, :string
       add :email, :string
       add :phone, :string
@@ -13,6 +13,6 @@ defmodule InvoiceManager.Repo.Migrations.CreateClient do
       timestamps()
     end
 
-    create unique_index(:client, [:email])
+    create unique_index(:clients, [:email])
   end
 end

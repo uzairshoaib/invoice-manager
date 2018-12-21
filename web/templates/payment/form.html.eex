@@ -1,0 +1,33 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= label f, :client_id, "Select Client", class: "control-label" %>
+    <%= select f, :client_id, @clients, class: "form-control", prompt: "Select Client" %>
+    <%= error_tag f, :client_id %>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group">
+        <%= label f, :date, class: "control-label" %>
+        <%= text_input f, :date, class: "form-control datpicker" %>
+        <%= error_tag f, :date %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group">
+        <%= label f, :amount, class: "control-label" %>
+        <%= number_input f, :amount, step: "any", class: "form-control" %>
+        <%= error_tag f, :amount %>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

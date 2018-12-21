@@ -12,7 +12,7 @@
           <th>Phone</th>
           <th>Company</th>
           <th>Designation</th>
-          <th>Status</th>
+          <%# <th>Status</th> %>
 
           <th></th>
         </tr>
@@ -25,7 +25,13 @@
           <td><%= client.phone %></td>
           <td><%= client.company %></td>
           <td><%= client.designation %></td>
-          <td><%= client.status %></td>
+          <!-- <td>
+            <%= if client.status do
+                "Active"
+              else
+                "Deactive"
+            end %>
+          </td> -->
 
           <td class="text-right">
             <span>

@@ -1,0 +1,28 @@
+<h2>Account Ledger</h2>
+
+<table class="table table-bordered whitespace-nowrap">
+  <thead>
+    <tr>
+      <th colspan="8" class="text-center">November 2018</th>
+    </tr>
+    <tr>
+      <th>Client Name</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for client <- @clients do %>
+      <tr>
+        <td><%= client.name %></td>
+        <td>
+          <%= link to: ledger_path(@conn, :show, client), class: "btn btn-outline-info btn-sm" do %>
+            View
+          <% end %>
+          <%= link to: ledger_path(@conn, :show, client), class: "btn btn-outline-info btn-sm" do %>
+            Print
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

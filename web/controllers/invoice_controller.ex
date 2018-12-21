@@ -50,6 +50,16 @@ defmodule InvoiceManager.InvoiceController do
 
     case Repo.insert(changeset) do
       {:ok, invoice} ->
+        invoice = invoice 
+                  |> Repo.preload([:client, :items])
+        # calculate invoice amount
+        invoice_amount = Enum.map(invoice.items, fn i -> Decimal.to_float(i.amount) end)
+                          |> Enum.sum
+        # update client balance
+        client_new_balance = (Decimal.to_float(invoice.client.balance) + invoice_amount)
+        client_changeset = Client.changeset(invoice.client, %{"balance" => client_new_balance})
+        Repo.update(client_changeset)
+        # redirect
         conn
         |> put_flash(:info, "Invoice created successfully.")
         |> redirect(to: invoice_path(conn, :show, invoice))

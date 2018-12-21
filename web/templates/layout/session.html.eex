@@ -25,6 +25,9 @@
   <body class="bg-dark">
 
     <div class="container">
+      <div class="mt-2">
+        <%= render "error.html", conn: @conn %>
+      </div>
       <%= render @view_module, @view_template, assigns %>      
     </div>
 

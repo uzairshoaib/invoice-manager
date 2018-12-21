@@ -1,0 +1,39 @@
+<h2>Account Ledger</h2>
+<div class="table-responsive">
+  <table class="table table-bordered whitespace-nowrap">
+    <thead>
+      <tr>
+        <th colspan="8" class="text-center">November 2018</th>
+      </tr>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Vch No.</th>
+        <th>Particulars</th>
+        <th>Debit(Rs.)</th>
+        <%# <th>Credit(Rs.)</th> %>
+        <th>Balance(Rs.)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for invoice <- @invoices do %>
+        <tr>
+          <td><%= Timex.format!(invoice.inserted_at, "{D}-{m}-{YYYY}") %></td>
+          <td><%= invoice.type.title %></td>
+          <td><%= invoice.type.title %> Bill<%= invoice.id %></td>
+          <td>
+            <ul class="list-unstyled">
+              <%= for item <- invoice.items do %>
+                <li><%= item.description %></li>
+              <% end %>
+            </ul>
+          </td>
+          <td><%= Enum.map(invoice.items, fn i -> Decimal.to_float i.amount end)
+              |> Enum.sum %></td>
+          <td><%= Enum.map(invoice.items, fn i -> Decimal.to_float i.amount end)
+              |> Enum.sum %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
